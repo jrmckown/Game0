@@ -6,12 +6,12 @@ using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Content;
 
-namespace Game0
+namespace game0
 {
     /// <summary>
     /// A class representing a slime ghost
     /// </summary>
-    public class GhostSprite
+    public class YetiSprite
     {
         private GamePadState gamePadState;
 
@@ -29,7 +29,7 @@ namespace Game0
         /// <param name="content">The ContentManager to load with</param>
         public void LoadContent(ContentManager content)
         {
-            texture = content.Load<Texture2D>("slime");
+            texture = content.Load<Texture2D>("yeti");
         }
 
         /// <summary>
@@ -43,8 +43,8 @@ namespace Game0
 
             // Apply the gamepad movement with inverted Y axis
             position += gamePadState.ThumbSticks.Left * new Vector2(5, -5);
-            if (gamePadState.ThumbSticks.Left.X < 0) flipped = true;
-            if (gamePadState.ThumbSticks.Left.X > 0) flipped = false;
+            if (gamePadState.ThumbSticks.Left.X < 0) flipped = false;
+            if (gamePadState.ThumbSticks.Left.X > 0) flipped = true;
 
 
             // Apply keyboard movement
@@ -53,13 +53,13 @@ namespace Game0
             if (keyboardState.IsKeyDown(Keys.Left) || keyboardState.IsKeyDown(Keys.A))
             {
                 position += new Vector2(-5, 0);
-                flipped = true;
+                flipped = false;
             }
 
             if (keyboardState.IsKeyDown(Keys.Right) || keyboardState.IsKeyDown(Keys.D))
             {
                 position += new Vector2(5, 0);
-                flipped = false;
+                flipped = true;
             }
 
         }
@@ -71,7 +71,7 @@ namespace Game0
         /// <param name="spriteBatch">The spritebatch to render with</param>
         public void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
-            SpriteEffects spriteEffects = (flipped) ? SpriteEffects.FlipHorizontally : SpriteEffects.None;
+            SpriteEffects spriteEffects = flipped ? SpriteEffects.FlipHorizontally : SpriteEffects.None;
             spriteBatch.Begin();
             spriteBatch.Draw(texture, position, null, Color.White, 0, new Vector2(64, 64), 1, spriteEffects, 0);
             spriteBatch.End();
