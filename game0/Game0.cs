@@ -1,15 +1,18 @@
-﻿using Microsoft.Xna.Framework;
+﻿using Game0;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
 namespace game0
 {
-    public class Game1 : Game
+    public class Game0 : Game
     {
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
 
-        public Game1()
+        private GhostSprite Ghost;
+
+        public Game0()
         {
             _graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
@@ -19,14 +22,14 @@ namespace game0
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
-
+            Ghost = new GhostSprite();
             base.Initialize();
         }
 
         protected override void LoadContent()
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
-
+            Ghost.LoadContent(Content);
             // TODO: use this.Content to load your game content here
         }
 
@@ -34,7 +37,7 @@ namespace game0
         {
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
-
+            Ghost.Update(gameTime);
             // TODO: Add your update logic here
 
             base.Update(gameTime);
@@ -43,6 +46,8 @@ namespace game0
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
+            
+            Ghost.Draw(gameTime, _spriteBatch);
 
             // TODO: Add your drawing code here
 
