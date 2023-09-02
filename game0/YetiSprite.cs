@@ -5,11 +5,12 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Content;
+using game0.Collisions;
 
 namespace game0
 {
     /// <summary>
-    /// A class representing a slime ghost
+    /// A class representing a yeti
     /// </summary>
     public class YetiSprite
     {
@@ -21,7 +22,11 @@ namespace game0
 
         private bool flipped;
 
-        private Vector2 position = new Vector2(200, 200);
+        private Vector2 position = new Vector2(400, 100);
+
+        private BoundingRectangle bounds = new BoundingRectangle(new Vector2(400,100), 56, 56);
+
+        public BoundingRectangle Bounds => bounds;
 
         /// <summary>
         /// Loads the sprite texture using the provided ContentManager
@@ -61,7 +66,8 @@ namespace game0
                 position += new Vector2(5, 0);
                 flipped = true;
             }
-
+            bounds.X = position.X;
+            bounds.Y = position.Y;
         }
 
         /// <summary>
@@ -72,8 +78,8 @@ namespace game0
         public void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
             SpriteEffects spriteEffects = flipped ? SpriteEffects.FlipHorizontally : SpriteEffects.None;
-            spriteBatch.Begin();
-            spriteBatch.Draw(texture, position, null, Color.White, 0, new Vector2(64, 64), 1, spriteEffects, 0);
+            spriteBatch.Begin(SpriteSortMode.FrontToBack);
+            spriteBatch.Draw(texture, position, null, Color.White, 0, new Vector2(0, 0), 1, spriteEffects, 0);
             spriteBatch.End();
         }
     }
